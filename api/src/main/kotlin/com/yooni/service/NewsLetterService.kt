@@ -1,5 +1,6 @@
 package com.yooni.service
 
+import com.yooni.controller.NewsLetterResponse
 import com.yooni.domain.entity.NewsLetterInfo
 import com.yooni.newsletter.domain.repository.NewsLetterInfoRepository
 import com.yooni.newsletter.domain.repository.NewsLetterRepository
@@ -12,10 +13,20 @@ class NewsLetterService(
     private val newsLetterRepository: NewsLetterRepository,
     private val newsLetterInfoRepository: NewsLetterInfoRepository,
 ) {
+    @Transactional(readOnly = true)
     fun getNewsLetter(externalId: String) =
         newsLetterRepository.findByExternalId(externalId)?.let { newsLetter ->
-            getNewsLetterInfo(newsLetter.newsLetterInfoExternalId)?.let {
-
+            getNewsLetterInfo(newsLetter.newsLetterInfoExternalId)?.let { newsLetterInfo ->
+                NewsLetterResponse(
+                    externalId = newsLetter.externalId,
+                    newsLetterInfoExternalId = newsLetterInfo.externalId,
+                    newsLetterInfoName = newsLetterInfo.name,
+                    title = newsLetter.mailTitle,
+                    snippet = newsLetter.mailSnippet,
+                    content = newsLetter.content,
+                    uploadedDate = newsLetter.uploadedDate,
+                    receivedAt = newsLetter.receivedAt
+                )
             }
         }
 
