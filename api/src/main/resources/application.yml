@@ -1,0 +1,20 @@
+
+
+gmail:
+  domain:
+    gmail-auth: https://accounts.google.com
+    gmail-api: https://gmail.googleapis.com
+
+spring:
+  batch:
+    job:
+      names: fetchAndSaveNewsLetterJob
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://newslettercollector-db.cto5vei4nbnz.ap-northeast-2.rds.amazonaws.com:3306/news_letter_collector"
+    username: admin
+
+
+  profiles:
+    include: secret
